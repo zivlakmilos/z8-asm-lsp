@@ -16,7 +16,13 @@ var handler protocol.Handler
 func main() {
 	commonlog.Configure(1, nil)
 
-	handler = protocol.Handler{}
+	handler = protocol.Handler{
+		Initialize:             initialize,
+		Initialized:            initialized,
+		Shutdown:               shutdown,
+		SetTrace:               setTrace,
+		TextDocumentCompletion: textDocumentCompletion,
+	}
 
 	srv := server.NewServer(&handler, name, true)
 
@@ -25,6 +31,10 @@ func main() {
 
 func initialize(context *glsp.Context, params *protocol.InitializeParams) (any, error) {
 	capabilities := handler.CreateServerCapabilities()
+
+	capabilities.CompletionProvider = &protocol.CompletionOptions{
+		TriggerCharacters: []string{""},
+	}
 
 	return protocol.InitializeResult{
 		Capabilities: capabilities,
@@ -44,7 +54,11 @@ func shutdown(context *glsp.Context) error {
 	return nil
 }
 
-func setTrance(context *glsp.Context, params *protocol.SetTraceParams) error {
+func setTrace(context *glsp.Context, params *protocol.SetTraceParams) error {
 	protocol.SetTraceValue(params.Value)
 	return nil
+}
+
+func textDocumentCompletion(context *glsp.Context, params *protocol.CompletionParams) (any, error) {
+	return nil, nil
 }
