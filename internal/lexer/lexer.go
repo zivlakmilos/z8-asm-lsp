@@ -48,13 +48,22 @@ func (l *Lexer) Next() *Token {
 
 	if l.isNumber(l.ch) && l.peek() == 'x' {
 		literal := l.readHex()
-		return NewToken(TokenTypeHex, literal)
+		tok = NewToken(TokenTypeHex, literal)
 	} else if l.ch == '0' && l.peek() == 'b' {
 		literal := l.readBin()
-		return NewToken(TokenTypeBin, literal)
+		tok = NewToken(TokenTypeBin, literal)
 	} else if l.isNumber(l.ch) {
 		literal := l.readInt()
-		return NewToken(TokenTypeInt, literal)
+		tok = NewToken(TokenTypeInt, literal)
+	} else if l.isLetter(l.ch) {
+		literal := l.readLiteral()
+
+		tokenType, ok := tokenTypeMap[literal]
+		if !ok {
+			tokenType = TokenTypeLiteral
+		}
+
+		tok = NewToken(tokenType, literal)
 	}
 
 	if tok == nil {
@@ -67,7 +76,7 @@ func (l *Lexer) Next() *Token {
 }
 
 func (l *Lexer) readChar() {
-	if l.peekPosition > len(l.input) {
+	if l.peekPosition >= len(l.input) {
 		l.ch = 0
 	} else {
 		l.ch = l.input[l.peekPosition]
@@ -92,7 +101,7 @@ func (l *Lexer) readLiteral() string {
 		l.readChar()
 	}
 
-	return l.input[startPos:(l.position - 1)]
+	return l.input[startPos:(l.position)]
 }
 
 func (l *Lexer) readInt() string {
@@ -102,7 +111,7 @@ func (l *Lexer) readInt() string {
 		l.readChar()
 	}
 
-	return l.input[startPos:(l.position - 1)]
+	return l.input[startPos:(l.position)]
 }
 
 func (l *Lexer) readHex() string {
@@ -112,7 +121,7 @@ func (l *Lexer) readHex() string {
 		l.readChar()
 	}
 
-	return l.input[startPos:(l.position - 1)]
+	return l.input[startPos:(l.position)]
 }
 
 func (l *Lexer) readBin() string {
@@ -122,7 +131,7 @@ func (l *Lexer) readBin() string {
 		l.readChar()
 	}
 
-	return l.input[startPos:(l.position - 1)]
+	return l.input[startPos:(l.position)]
 }
 
 func (l *Lexer) skipWhitespaces() {

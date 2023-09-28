@@ -31,14 +31,14 @@ const (
 )
 
 type Token struct {
-	tokenType TokenType
-	literal   string
+	TokenType TokenType
+	Literal   string
 }
 
 func NewToken(tokenType TokenType, literal string) *Token {
 	token := Token{
-		tokenType: tokenType,
-		literal:   literal,
+		TokenType: tokenType,
+		Literal:   literal,
 	}
 
 	return &token
