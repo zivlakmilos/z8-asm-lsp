@@ -13,8 +13,10 @@ const name = "z8asm"
 var version = "0.0.1"
 var handler protocol.Handler
 
+var logPath = "/tmp/z8-asm-lsp.log"
+
 func main() {
-	commonlog.Configure(1, nil)
+	commonlog.Configure(1, &logPath)
 
 	handler = protocol.Handler{
 		Initialize:             initialize,
@@ -60,5 +62,7 @@ func setTrace(context *glsp.Context, params *protocol.SetTraceParams) error {
 }
 
 func textDocumentCompletion(context *glsp.Context, params *protocol.CompletionParams) (any, error) {
-	return nil, nil
+	var items []protocol.CompletionItem
+
+	return items, nil
 }
