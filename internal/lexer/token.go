@@ -8,6 +8,7 @@ const (
 	TokenTypeInt
 	TokenTypeHex
 	TokenTypeBin
+	TokenTypeLiteral
 	TokenTypeNop
 	TokenTypeLdA
 	TokenTypeLdB
