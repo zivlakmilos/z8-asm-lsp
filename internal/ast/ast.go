@@ -25,6 +25,10 @@ type Program struct {
 	Instructions []Node
 }
 
+func NewProgram() *Program {
+	return &Program{}
+}
+
 func (p *Program) String() string {
 	result := "["
 
@@ -34,6 +38,10 @@ func (p *Program) String() string {
 	result += "]"
 
 	return result
+}
+
+func (p *Program) AddInstruction(instruction *Instruction) {
+	p.Instructions = append(p.Instructions, instruction)
 }
 
 func NewNumber(token *lexer.Token) *Number {
