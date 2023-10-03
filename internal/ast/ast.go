@@ -22,7 +22,7 @@ type Instruction struct {
 }
 
 type Program struct {
-	Instructions []Node
+	Instructions []*Instruction
 }
 
 func NewProgram() *Program {
@@ -78,4 +78,8 @@ func (i *Instruction) String() string {
 
 func (i *Instruction) TokenLiteral() string {
 	return i.token.Literal
+}
+
+func (i *Instruction) Arg() *Number {
+	return i.arg
 }
