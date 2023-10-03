@@ -34,7 +34,7 @@ func (p *Parser) ParseProgram() (*ast.Program, error) {
 		}
 
 		if !p.isInstruction(p.currentToken) {
-			return nil, fmt.Errorf("parser error: expected instruction")
+			return nil, fmt.Errorf("parser error: expected instruction but got %v", p.currentToken.Literal)
 		}
 
 		if p.hasArgument(p.currentToken) {
@@ -61,15 +61,15 @@ func (p *Parser) parseNextToken() {
 
 func (p *Parser) hasArgument(token *lexer.Token) bool {
 	switch token.TokenType {
-	case lexer.TokenTypeLdA:
-	case lexer.TokenTypeLdB:
-	case lexer.TokenTypeStA:
-	case lexer.TokenTypeStB:
-	case lexer.TokenTypeSetA:
-	case lexer.TokenTypeSetB:
-	case lexer.TokenTypeJmp:
-	case lexer.TokenTypeJmpZ:
-	case lexer.TokenTypeJmpC:
+	case lexer.TokenTypeLdA,
+		lexer.TokenTypeLdB,
+		lexer.TokenTypeStA,
+		lexer.TokenTypeStB,
+		lexer.TokenTypeSetA,
+		lexer.TokenTypeSetB,
+		lexer.TokenTypeJmp,
+		lexer.TokenTypeJmpZ,
+		lexer.TokenTypeJmpC:
 		return true
 	}
 
@@ -78,9 +78,9 @@ func (p *Parser) hasArgument(token *lexer.Token) bool {
 
 func (p *Parser) isArgument(token *lexer.Token) bool {
 	switch token.TokenType {
-	case lexer.TokenTypeInt:
-	case lexer.TokenTypeHex:
-	case lexer.TokenTypeBin:
+	case lexer.TokenTypeInt,
+		lexer.TokenTypeHex,
+		lexer.TokenTypeBin:
 		return true
 	}
 
@@ -89,25 +89,25 @@ func (p *Parser) isArgument(token *lexer.Token) bool {
 
 func (p *Parser) isInstruction(token *lexer.Token) bool {
 	switch token.TokenType {
-	case lexer.TokenTypeNop:
-	case lexer.TokenTypeLdA:
-	case lexer.TokenTypeLdB:
-	case lexer.TokenTypeStA:
-	case lexer.TokenTypeStB:
-	case lexer.TokenTypeSetA:
-	case lexer.TokenTypeSetB:
-	case lexer.TokenTypeNot:
-	case lexer.TokenTypeAnd:
-	case lexer.TokenTypeOr:
-	case lexer.TokenTypeXor:
-	case lexer.TokenTypeNand:
-	case lexer.TokenTypeNor:
-	case lexer.TokenTypeAdd:
-	case lexer.TokenTypeSub:
-	case lexer.TokenTypeJmp:
-	case lexer.TokenTypeJmpZ:
-	case lexer.TokenTypeJmpC:
-	case lexer.TokenTypeHlt:
+	case lexer.TokenTypeNop,
+		lexer.TokenTypeLdA,
+		lexer.TokenTypeLdB,
+		lexer.TokenTypeStA,
+		lexer.TokenTypeStB,
+		lexer.TokenTypeSetA,
+		lexer.TokenTypeSetB,
+		lexer.TokenTypeNot,
+		lexer.TokenTypeAnd,
+		lexer.TokenTypeOr,
+		lexer.TokenTypeXor,
+		lexer.TokenTypeNand,
+		lexer.TokenTypeNor,
+		lexer.TokenTypeAdd,
+		lexer.TokenTypeSub,
+		lexer.TokenTypeJmp,
+		lexer.TokenTypeJmpZ,
+		lexer.TokenTypeJmpC,
+		lexer.TokenTypeHlt:
 		return true
 	}
 
