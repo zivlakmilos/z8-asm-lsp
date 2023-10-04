@@ -46,9 +46,10 @@ hlt`
 
 		i++
 		if inst.Arg() != nil {
+			arg := inst.Arg()
 			ex := expected[i]
-			if ex.Literal != inst.TokenLiteral() {
-				t.Fatalf("expected token literal %v but got %v", ex.Literal, inst.TokenLiteral())
+			if ex.Literal != arg.TokenLiteral() {
+				t.Fatalf("expected token literal %v but got %v", ex.Literal, arg.TokenLiteral())
 			}
 
 			i++

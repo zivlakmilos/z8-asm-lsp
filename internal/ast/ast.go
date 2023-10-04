@@ -66,7 +66,7 @@ func NewInstruction(token *lexer.Token, arg *lexer.Token) *Instruction {
 	}
 
 	if arg != nil {
-		inst.arg = NewNumber(token)
+		inst.arg = NewNumber(arg)
 	}
 
 	return &inst
