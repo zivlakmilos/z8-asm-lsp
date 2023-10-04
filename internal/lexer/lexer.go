@@ -46,7 +46,9 @@ func (l *Lexer) Next() *Token {
 
 	l.skipWhitespaces()
 
-	if l.isNumber(l.ch) && l.peek() == 'x' {
+	if l.ch == 0 {
+		tok = NewToken(TokenTypeEof, "EOF")
+	} else if l.isNumber(l.ch) && l.peek() == 'x' {
 		literal := l.readHex()
 		tok = NewToken(TokenTypeHex, literal)
 	} else if l.ch == '0' && l.peek() == 'b' {
